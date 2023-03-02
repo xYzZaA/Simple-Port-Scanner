@@ -12,7 +12,7 @@ func tcpConnect(ip string, port int) error {
 		return err
 	}
 	defer conn.Close()
-	err = conn.SetDeadline(time.Now())
+	//err = conn.SetDeadline(time.Now())
 	if err != nil {
 		return err
 	}

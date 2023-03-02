@@ -3,7 +3,6 @@ package val
 import (
 	"fmt"
 	"github.com/malfunkt/iprange"
-	"net"
 	"runtime"
 	"strconv"
 	"strings"
@@ -11,7 +10,7 @@ import (
 
 // PortCommon port为空，就扫描这些端口
 var PortCommon = []int{21, 22, 23, 25, 53, 69, 80, 81, 88, 89, 110, 135, 161, 445, 139, 137,
-	143, 389, 443, 512, 513, 514, 548, 873, 1433, 1521, 2181, 3306, 3389, 3690, 4848, 5000,
+	143, 389, 443, 512, 513, 514, 548, 873, 1433, 1434, 1521, 2181, 3306, 3389, 3690, 4848, 5000,
 	5001, 5432, 5632, 5900, 5901, 5902, 6379, 7000, 7001, 7002, 8000, 8001, 8007, 8008, 8009,
 	8069, 8080, 8081, 8088, 8089, 8090, 8091, 9060, 9090, 9091, 9200, 9300, 10000, 11211, 27017,
 	27018, 50000, 1080, 888, 1158, 2100, 2424, 2601, 2604, 3128, 5984, 7080, 8010, 8082, 8083,
@@ -79,18 +78,33 @@ var PortCommon = []int{21, 22, 23, 25, 53, 69, 80, 81, 88, 89, 110, 135, 161, 44
 	8153, 1020, 50100, 8391, 34899, 7090, 6100, 8777, 8298, 8281, 7023, 3377, 9100,
 }
 
-var Address string //存放ip地址
-var Port string    //存放端口信息
-var ThreadNum int  //控制协程最大数量
-var Mode string    //确定是否使用syn半连接扫描，仅限linux
+var Address string   //存放ip地址
+var Port string      //存放端口信息
+var ThreadNum int    //控制协程最大数量
+var Mode string      //确定是否使用syn半连接扫描，仅限linux
+var OnlyIcmp bool    //是否仅使用探测功能
+var NoBlast bool     //是否进行爆破
+var Blast string     //指定爆破范围，默认爆破所有
+var Output bool      //控制是否将结果输出到txt文件，默认文件名为result.txt,存放的是端口的扫描结果
+var Dict string      //如果自己给出字典，字典的文件名存在此变量
+var RedisUser string //存放redis用户名，默认空值，空值就是不设置用户名
 const System = runtime.GOOS
 
-func GetIpList(ip string) ([]net.IP, error) {
+var FtpUsers = []string{"ftp", "admin", "www", "web", "root", "db", "wwwroot", "data"}
+var MysqlUsers = []string{"root", "mysql"}
+var SshUsers = []string{"root", "admin"}
+var Passwords = []string{"123456", "admin", "admin123", "root", "", "pass123", "pass@123", "mima", "Wangqi010428", "password", "123123", "654321", "111111", "123", "1", "admin@123", "Admin@123", "admin123!@#", "P@ssw0rd!", "P@ssw0rd", "Passw0rd", "qwe123", "12345678", "test", "test123", "123qwe", "123qwe!@#", "123456789", "123321", "666666", "a123456.", "123456~a", "123456!a", "000000", "1234567890", "8888888", "!QAZ2wsx", "1qaz2wsx", "abc123", "abc123456", "1qaz@WSX", "a11111", "a12345", "Aa1234", "Aa1234.", "Aa12345", "a123456", "a123123", "Aa123123", "Aa123456", "Aa12345.", "sysadmin", "system", "1qaz!QAZ", "2wsx@WSX", "qwe123!@#", "Aa123456!", "A123456s!", "sa123456", "1q2w3e", "Charge123", "Aa123456789"}
+
+func GetIpList(ip string) ([]string, error) {
 	list, err := iprange.ParseList(ip)
 	if err != nil {
 		return nil, err
 	}
-	ips := list.Expand()
+	temp := list.Expand()
+	var ips []string
+	for _, ip := range temp {
+		ips = append(ips, ip.String())
+	}
 	return ips, nil
 } //将输入的多个ip(如果有)，拆分成一个[]net.IP的切片
 
@@ -122,39 +136,3 @@ func GetPortList(selection string) ([]int, error) {
 	}
 	return ports, nil
 } //将输入的多个port(如果有)，拆分成一个[]int的切片
-
-func GetTasks() ([]map[string][]int, error) {
-	task := make([]map[string]int, 0)
-	ips, _ := GetIpList(Address)
-	ports, _ := GetPortList(Port) //在这里分组
-	if len(ports) == 0 {
-		ports = PortCommon
-	}
-	if ips == nil || ports == nil {
-		return nil, fmt.Errorf("invalid port")
-	}
-	for _, ip := range ips {
-		for _, port := range ports {
-			ipPort := map[string]int{ip.String(): port}
-			task = append(task, ipPort)
-		}
-	}
-	result := make([]map[string][]int, 0)
-	for _, ip := range ips {
-		temp := make([]int, 0)
-		for _, port := range ports {
-			temp = append(temp, port)
-			if len(temp)%500 == 0 {
-				part := make(map[string][]int)
-				part[ip.String()] = temp
-				result = append(result, part)
-				temp = []int{}
-			}
-		}
-		part := make(map[string][]int)
-		part[ip.String()] = temp
-		result = append(result, part)
-	}
-	return result, nil
-} //返回一个map的切片，里面是ip:port
-// []map[string][]int

@@ -4,15 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd80507e-846c-4513-b1af-04e66a8b481a" name="Changes" comment="" />
+    <list default="true" id="cd80507e-846c-4513-b1af-04e66a8b481a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scanner/pushtask.go" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/pushtask.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scanner/tcpconnect.go" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/tcpconnect.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sflag/flag.go" beforeDir="false" afterPath="$PROJECT_DIR$/sflag/flag.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/val/val.go" beforeDir="false" afterPath="$PROJECT_DIR$/val/val.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Program Files/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2GtOTxOUS4Jsqm4XDvObe6SL4it" />
   <component name="ProjectViewState">
@@ -26,7 +42,7 @@
     <property name="go.formatter.settings.were.checked" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -37,6 +53,9 @@
       <option name="presentableId" value="Default" />
       <updated>1667204424617</updated>
       <workItem from="1667204425757" duration="10000" />
+      <workItem from="1668525032612" duration="7000" />
+      <workItem from="1676796882334" duration="250000" />
+      <workItem from="1677080919104" duration="34000" />
     </task>
     <servers />
   </component>
